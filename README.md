@@ -1,6 +1,11 @@
-# iview
+# View Position
 
-## Display image, show mouse position and pixel values from web browser
+This document describes how to use a web browser and JavaScript to display images, show mouse positions, and pixel values.
 
-If you want to view the images, and want to know the mouse location and pixel values, you may install some image viewer(s). I am at the same boat. After some research, I found that there is no light-weighted image viewer which can show the pixel values at Linux platform up to my best knowledge. So I decide to write one by myself. It turns out web browser + Javascript are good enough to do this. Here is the Javascript based image viewer: [iview.html](https://yangcha.github.io/iview/iview.html)
+If you need to view images and want to know the mouse location and pixel values, there are several image viewer options available for installation. However, after researching, I found that there was no light-weighted image viewer that could show the pixel values on the Linux platform to the best of my knowledge. As a result, I decided to write my own.
 
+I found that using a web browser and JavaScript were sufficient to accomplish my goal. As a result, I created a JavaScript-based image viewer that can be accessed at the following link: [View Postion](https://github.com/watchakorn-18k/viewpos)
+
+The image viewer is simple to use and provides an efficient way to view images while also displaying mouse positions and pixel values.
+
+# Redesign : wk-18k
