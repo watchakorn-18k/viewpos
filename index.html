@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<!-- Display image, show mouse position and pixel values
+Author: Changjiang Yang
+Date:	02/14/2023
+TODO:	Add drag and drop
+-->
+<html>
+
+<head>
+	<title>View Position</title>
+	<link rel="icon" type="image/x-icon"
+		href="https://media.discordapp.net/attachments/581018943041306641/1075150041389465660/icons8-pixel-arrow-32.png">
+	<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+	<style>
+		div.footer {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			margin: 0 auto;
+			background: #0072BB;
+			color: #fff;
+		}
+
+		* {
+			font-family: 'Kanit', sans-serif;
+		}
+
+		div#results {
+			z-index: 0;
+		}
+
+		.toast {
+			z-index: 1;
+		}
+
+		canvas {
+			z-index: -1;
+		}
+	</style>
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@2.50.1/dist/full.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+	<div class="flex flex-col items-center justify-center py-10">
+
+		<label for="inputImage" class="text-lg font-medium">เลือกรูปภาพ</label>
+		<input type="file" class="file-input file-input-bordered file-input-primary w-full max-w-xs mt-2 rounded-lg"
+			id="inputImage" />
+
+		<p class="text-lg p-5">Redesign : watchakorn-18k</p>
+		https://cdn.discordapp.com/attachments/581018943041306641/1075152433921151036/fGPkEm8.png
+	</div>
+	<div class="toast toast-end fixed in" id="toast">
+		<div id="toast-bottom-left"
+			class="p-4 space-x-4 text-gray-500 bg-white divide-x divide-gray-200 rounded-lg shadow bottom-5 left-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800"
+			role="alert">
+			<div class="text-sm font-normal" id="text-toast">Bottom left positioning.</div>
+		</div>
+	</div>
+
+	<canvas id="canvas" class="mx-auto my-12"></canvas>
+
+
+	<div class="flex items-center justify-center bg-primary py-2 fixed bottom-0 w-full" id="results">
+		<p class="text-sm">เลื่อนเมาส์ไปที่รูปภาพเพื่อแสดงตำแหน่งของเมาส์และค่าพิกเซลและอัลฟ่า</p>
+	</div>
+	<script>
+		const toast = document.getElementById("toast");
+		toast.style.display = "none";
+
+		let showPos = (copyText) => {
+			const text_toast = document.getElementById("text-toast");
+			toast.style.display = "block";
+			text_toast.textContent = copyText;
+			function showToast() {
+				toast.style.display = "block";
+				setTimeout(function () {
+					toast.style.display = "none";
+
+				}, 2000);
+			}
+
+			toast.addEventListener("animationend", function () {
+				setTimeout(function () {
+					toast.style.display = "none";
+				}, 2000);
+			});
+		}
+
+		var URL = window.URL;
+		var cvs = document.getElementById('canvas');
+		var ctx = cvs.getContext('2d');
+		var res = document.getElementById('results');
+
+		cvs.addEventListener('mousemove', mousePos, false);
+		cvs.addEventListener('click', copyMousePos, false);
+
+		window.onload = function () {
+			var inputImage = document.getElementById('inputImage');
+			console.log(inputImage);
+			inputImage.addEventListener('change', handleImageFiles, false);
+
+		}
+
+
+
+		function copyMousePos(evt) {
+			var rect = cvs.getBoundingClientRect();
+			var x = parseInt(evt.clientX - rect.left);
+			var y = parseInt(evt.clientY - rect.top);
+			copyText = x + ',' + y
+			navigator.clipboard.writeText(copyText).then(function () {
+				console.log('osssk')
+				showPos('คัดลอกตำแหน่ง ' + 'x : ' + x + ' y : ' + y + ' แล้ว')
+			}, function () {
+				console.log('ko')
+			});
+		}
+
+		function mousePos(evt) {
+			var rect = cvs.getBoundingClientRect();
+			var x = parseInt(evt.clientX - rect.left);
+			var y = parseInt(evt.clientY - rect.top);
+			var p = ctx.getImageData(x, y, 1, 1).data;
+			results.innerHTML = '<table style="width:100%;table-layout:fixed"><td>X: '
+				+ x + '</td><td>Y: ' + y + '</td><td>Red: '
+				+ p[0] + '</td><td>Green: ' + p[1] + '</td><td>Blue: '
+				+ p[2] + '</td><td>Alpha: ' + p[3] + "</td></table>";
+			return { x, y };
+		}
+
+		function handleImageFiles(e) {
+			var url = URL.createObjectURL(e.target.files[0]);
+			var img = new Image();
+			img.onload = function () {
+				cvs.width = img.width;
+				cvs.height = img.height;
+				ctx.drawImage(img, 0, 0);
+			}
+			img.src = url;
+		}
+
+	</script>
+</body>
+
+</html>
