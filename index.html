@@ -78,6 +78,7 @@ TODO:	Add drag and drop
 			id="inputImage" />
 
 		<p class="text-lg p-5">Redesign : watchakorn-18k</p>
+		<p class="text-sm" id="show_copy"></p>
 
 	</div>
 	<div class="toast toast-end fixed in" id="toast">
@@ -127,7 +128,6 @@ TODO:	Add drag and drop
 
 		window.onload = function () {
 			var inputImage = document.getElementById('inputImage');
-			console.log(inputImage);
 			inputImage.addEventListener('change', handleImageFiles, false);
 
 		}
@@ -140,7 +140,6 @@ TODO:	Add drag and drop
 			var y = parseInt(evt.clientY - rect.top);
 			copyText = x + ',' + y
 			navigator.clipboard.writeText(copyText).then(function () {
-				console.log('osssk')
 				showPos('คัดลอกตำแหน่ง ' + 'x : ' + x + ' y : ' + y + ' แล้ว')
 			}, function () {
 				console.log('ko')
@@ -151,6 +150,11 @@ TODO:	Add drag and drop
 			var rect = cvs.getBoundingClientRect();
 			var x = parseInt(evt.clientX - rect.left);
 			var y = parseInt(evt.clientY - rect.top);
+			show_copy = document.getElementById('show_copy');
+			if (inputImage.files[0] != undefined) {
+				show_copy.textContent = "คลิกเมาส์ซ้ายเพื่อคัดลอกตำแหน่ง x: " + x + ' , y: ' + y;
+			}
+
 			var p = ctx.getImageData(x, y, 1, 1).data;
 			results.innerHTML = '<table style="width:100%;table-layout:fixed"><td>X: '
 				+ x + '</td><td>Y: ' + y + '</td><td>Red: '
