@@ -1,6 +1,6 @@
 # View Position
 
-<p><img src="https://cdn.discordapp.com/attachments/581018943041306641/1075152433921151036/fGPkEm8.png"></p>
+<p align="center"><img src="[https://cdn.discordapp.com/attachments/581018943041306641/1075152433921151036/fGPkEm8.png](https://cdn.discordapp.com/attachments/581018943041306641/1214637611415506954/image.png?ex=65f9d66d&is=65e7616d&hm=c7a8fc3d4867205cdef1218bea7cbda88010d63c5cc207cca1bc289d0c5a7aee&)"></p>
 
 This document describes how to use a web browser and JavaScript to display images, show mouse positions, and pixel values.
 
